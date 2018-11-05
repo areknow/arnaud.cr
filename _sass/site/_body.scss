@@ -1,0 +1,65 @@
+@import './variables';
+
+
+
+section {
+  padding: 140px 60px 140px 60px;
+  font-size: 2rem;
+  border-bottom: 1px solid $black;
+  &:last-child {
+    border-bottom: none;
+    padding: 60px;
+  }
+
+  div {
+    margin-bottom: 14px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      &:after {
+        transform: translateX(0) translateY(-1px) scale(1.2);
+        margin-left: .8rem;
+        display: inline-block;
+        content: "";
+        width: 9px;
+        height: 14px;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI5IiBoZWlnaHQ9IjE0IiB2aWV3Qm94PSIwIDAgOSAxNCIgY2xhc3M9ImNoIj48cGF0aCBmaWxsPSJibGFjayIgZD0iTTUuNzc5NDIgNy4wMDAwNkwwIDEuMjMyNzlMMS4yMzUzNSAwTDguMjUwMTIgNy4wMDAwNkwxLjIzNTM1IDE0LjAwMDFMMCAxMi43NjczTDUuNzc5NDIgNy4wMDAwNloiPjwvcGF0aD48L3N2Zz4=");
+        transition: transform 50ms ease-in-out
+      }
+      &:hover {
+        &:after {
+          transform:translateX(.5rem) translateY(-1px) scale(1.2)
+        }
+      }
+    }
+  }
+
+}
+
+
+
+
+@media (max-width: 700px) {
+  section {
+    font-size: 1.4rem;
+    padding: 120px 30px 120px 30px;
+    &:last-child {
+      padding: 30px;
+    }
+    div {
+      a {
+        &:after {
+          transform: translateX(0) translateY(0) scale(1);
+        }
+        &:hover {
+          &:after {
+            transform:translateX(.5rem) translateY(0) scale(1)
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,9 @@
 // Defaults
-@import "site/variables.scss";
-@import "site/global.scss";
+@import "site/variables";
+@import "site/global";
+
+// Partials
+@import 'site/body';
 
 // Pages
-@import "site/home.scss";
+@import "site/home";
