@@ -6,6 +6,7 @@ const gulpSequence = require('gulp-sequence');
 const rename = require("gulp-rename");
 const tap = require('gulp-tap');
 const dest = require('gulp-dest');
+const htmlmin = require('gulp-htmlmin');
 
 
 
@@ -13,6 +14,7 @@ gulp.task('hbs-root', function () {
   return gulp
     .src('./_src/index.html')
     .pipe(hb().partials('./_partials/*.hbs'))
+    .pipe(htmlmin({ collapseWhitespace: true, minifyJS: true }))
     .pipe(gulp.dest('./dist'));
 });
 
@@ -31,6 +33,7 @@ gulp.task('hbs-dirs', function () {
       file.dirname = currentFile;
       file.basename = 'index';
     }))
+    .pipe(htmlmin({ collapseWhitespace: true, minifyJS: true }))
     .pipe(gulp.dest('./dist'));
 });
 

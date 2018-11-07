@@ -14,6 +14,7 @@
     "gulp-clean-css": "^3.9.2",
     "gulp-concat": "^2.6.1",
     "gulp-hb": "^7.0.1",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-minify": "^2.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-sequence": "^1.0.0",
