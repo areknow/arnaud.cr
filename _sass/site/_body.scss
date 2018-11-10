@@ -2,9 +2,10 @@
 section {
   padding: 140px 60px 140px 60px;
   font-size: 2rem;
-  border-top: 1px solid $black;
-  &:first-child {
-    border-top: none;
+  border-bottom: 1px solid $black;
+  &:last-child {
+    border-bottom: none;
+    padding: 60px;
   }
 
   div {
@@ -34,16 +35,15 @@ section {
   }
 }
 
-.pad {
-  padding: 60px;
-}
-
 
 
 @media (max-width: 700px) {
   section {
     font-size: 1.4rem;
     padding: 120px 30px 120px 30px;
+    &:last-child {
+      padding: 30px;
+    }
     div {
       a {
         &:after {
@@ -56,8 +56,5 @@ section {
         }
       }
     }
-  }
-  .pad {
-    padding: 30px;
   }
 }

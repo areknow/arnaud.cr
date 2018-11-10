@@ -1,3 +1,33 @@
 {
-  "title": "Arnaud Crowther"
+  "title": "Arnaud Crowther",
+  "resume": [
+    {
+      "text": "arnaud crowther",
+      "links": null
+    },
+    {
+      "text": null,
+      "links": [
+        { "text": "now: ui engineer @ dynatrace", "href": "//dynatrace.com" },
+        { "text": "now: president @ miniml llc", "href": "//miniml.co" }
+       ]
+    },
+    {
+      "text": "prev: guardian consulting, full-stack, sys admin", 
+      "links": null
+    },
+    {
+      "text": "", 
+      "links": [ 
+        { "text": "ping@arnaud.cr", "href": "mailto:ping@arnaud.cr", "target": null },
+        { "text": "github", "href": "//github.com/areknow", "target": "_blank"  },
+        { "text": "linkedin", "href": "//linkedin.com/in/arnaudcrowther", "target": "_blank"  },
+        { "text": "instagram", "href": "//instagram.com/areknowsee", "target": "_blank"  }
+       ]
+    },
+    {
+      "text": "detroit, 2018", 
+      "links": null
+    }
+  ]
 }
