@@ -1,4 +1,3 @@
 # arnaud.cr #
 
-Generated using my [dev-stack](https://github.com/areknow/dev-stack)
-Built and hosted in Netlify
+Generated using my [dev-stack](https://github.com/areknow/dev-stack), built and hosted in Netlify
