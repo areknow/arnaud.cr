@@ -6,7 +6,9 @@
     {{else}}
       {{#each this.links }}
         <div>
-          <a target="_blank" href="{{ this.href }}">{{ this.text }}</a>
+          <a target="_blank" href="{{ this.href }}">
+            {{ this.text }}{{> angle-right }}
+          </a>
         </div>
       {{/each}}
     {{/if}}

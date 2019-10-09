@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -14,71 +16,27 @@
 html {
   line-height: initial;
   background-color: $white;
+  color: $black;
 }
 body {
   font-style: normal; 
   padding: 0;
   margin: 0;
-
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 2rem;
-  color: $black;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 1.4;
 }
-
-.col-wrapper {
-  font-size: 0;
-  .col {
-    display: inline-block; 
-    font-size: 14px; 
-    vertical-align: top; 
-  }
-  .one    { width: 8.3333333333%; }
-  .two    { width: 16.6666666666%; }
-  .three  { width: 24.9999999999%; }
-  .four   { width: 33.3333333333%; }
-  .five   { width: 41.6666666665%; }
-  .six    { width: 49.9999999998%; }
-  .seven  { width: 58.3333333331%; }
-  .eight  { width: 66.6666666664%; }
-  .nine   { width: 74.9999999997%; }
-  .ten    { width: 83.333333333%; }
-  .eleven { width: 91.6666666663%; }
-  .twelve { width: 100%; }
-} 
-
-.abs-center {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  margin: auto;
-}
-.no-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.inline {
-  display: inline-block;
-  vertical-align: middle;
-}
-.page-column {
-  max-width: 1170px;
-  margin: auto;
-}
-.float-right {
-  float: right;
-}
-.float-left {
-  float: left;
-}
-
-
-// Demo
 
 h1 {
   text-align: center;
   margin: 0;
   margin-top: 100px;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: $black;
+    color: $white;
+  }
 }
