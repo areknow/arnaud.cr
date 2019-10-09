@@ -1,10 +1,10 @@
 section {
-  padding: 140px 60px 140px 60px;
+  padding: 140px 6%;
   font-size: 2rem;
   border-bottom: 1px solid $black;
   &:last-child {
     border-bottom: none;
-    padding: 60px;
+    padding: 60px 6%;
   }
   div {
     margin-bottom: 14px;
@@ -39,19 +39,31 @@ section {
 @media (max-width: 700px) {
   section {
     font-size: 1.4rem;
-    padding: 120px 30px 120px 30px;
+    padding: 120px 5%;
     &:last-child {
-      padding: 30px;
+      padding: 30px 5%;
     }
     div {
       a {
-        &:after {
+        svg {
           transform: translateX(0) translateY(0) scale(1);
         }
-        &:hover {
-          &:after {
+        svg:hover {
+          & {
             transform:translateX(.5rem) translateY(0) scale(1)
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  section {
+    div {
+      a {
+        svg {
+          display: none;
         }
       }
     }
