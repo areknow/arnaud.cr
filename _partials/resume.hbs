@@ -7,7 +7,8 @@
       {{#each this.links }}
         <div>
           <a target="_blank" href="{{ this.href }}">
-            {{ this.text }}{{> angle-right }}
+            <span>{{ this.text }}</span>
+            <i class="material-icons">keyboard_arrow_right</i>
           </a>
         </div>
       {{/each}}
