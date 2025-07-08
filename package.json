@@ -1,32 +1,30 @@
 {
   "name": "arnaud-cr",
-  "version": "0.1.1",
-  "description": "Personal site for Arnaud Crowther",
-  "main": "dist/index.html",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "gulp watch",
-    "build": "gulp build"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "author": "Arnaud P. Crowther",
-  "license": "ISC",
   "dependencies": {
-    "assign-deep": "^1.0.1",
-    "browser-sync": "^2.26.7",
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-clean-css": "^3.9.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-dest": "^0.2.3",
-    "gulp-extname": "^0.2.2",
-    "gulp-front-matter": "^1.3.0",
-    "gulp-hb": "^7.1.0",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-minify": "^2.1.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^3.2.1",
-    "gulp-tap": "^1.0.1",
-    "gulp-uglify": "^3.0.2",
-    "gulp-zip": "^4.1.0",
-    "handlebars-layouts": "^3.1.4"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "eslint": "^9.29.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0",
+    "sass-embedded": "^1.89.2",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.34.1",
+    "vite": "^7.0.0"
   }
 }
