@@ -21,7 +21,6 @@ export const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [tabList, setTabList] = useState(tabs);
   const [draggedTab, setDraggedTab] = useState<number | null>(null);
-  const [dropTarget, setDropTarget] = useState<number | null>(null);
 
   const handleDragStart = (e: React.DragEvent, tabId: number) => {
     setDraggedTab(tabId);
@@ -34,58 +33,44 @@ export const Tabs = () => {
     e.dataTransfer.setDragImage(dragElement, 0, 0);
   };
 
-  const handleDragOver = (e: React.DragEvent, tabId: number) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-
-    if (draggedTab !== null && draggedTab !== tabId) {
-      setDropTarget(tabId);
-    }
   };
 
   const handleDrop = (e: React.DragEvent, targetTabId: number) => {
     e.preventDefault();
 
     if (draggedTab === null || draggedTab === targetTabId) {
-      setDropTarget(null);
       return;
     }
 
     const draggedIndex = tabList.findIndex(tab => tab.id === draggedTab);
-    const targetIndex = tabList.findIndex(tab => tab.id === targetTabId);
+    let targetIndex = tabList.findIndex(tab => tab.id === targetTabId);
 
     const newTabList = [...tabList];
     const [draggedItem] = newTabList.splice(draggedIndex, 1);
+
+    // Adjust target index if the dragged item was before the target
+    if (draggedIndex < targetIndex) {
+      targetIndex -= 1;
+    }
+
     newTabList.splice(targetIndex, 0, draggedItem);
 
     setTabList(newTabList);
     setDraggedTab(null);
-    setDropTarget(null);
   };
 
   const handleDragEnd = () => {
     setDraggedTab(null);
-    setDropTarget(null);
-  };
-
-  const handleDragLeave = () => {
-    setDropTarget(null);
   };
 
   return (
     <div className="tabs">
       <div className="tabs-group">
-        {tabList.map((tab, index) => (
+        {tabList.map(tab => (
           <div key={tab.id} style={{ position: 'relative' }}>
-            {dropTarget === tab.id && draggedTab !== null && (
-              <div
-                className="tabs-drop-indicator"
-                style={{
-                  left: index === 0 ? '-1px' : '0px',
-                  right: index === tabList.length - 1 ? '-1px' : 'auto',
-                }}
-              />
-            )}
             <div
               className={classNames('tabs-header-item', {
                 'tabs-header-item--active': activeTab === tab.id,
@@ -93,30 +78,14 @@ export const Tabs = () => {
               onClick={() => setActiveTab(tab.id)}
               draggable
               onDragStart={e => handleDragStart(e, tab.id)}
-              onDragOver={e => handleDragOver(e, tab.id)}
+              onDragOver={handleDragOver}
               onDrop={e => handleDrop(e, tab.id)}
               onDragEnd={handleDragEnd}
-              onDragLeave={handleDragLeave}
             >
               {tab.label}
             </div>
           </div>
         ))}
-        {dropTarget === null && draggedTab !== null && (
-          <div
-            className="tabs-drop-indicator"
-            style={{
-              position: 'absolute',
-              right: '-1px',
-              top: 0,
-              bottom: 0,
-              width: '2px',
-              backgroundColor: 'white',
-              zIndex: 10,
-              pointerEvents: 'none',
-            }}
-          />
-        )}
       </div>
       <div className="tabs-content" contentEditable>
         {tabList.find(tab => tab.id === activeTab)?.content}
