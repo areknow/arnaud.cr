@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -21,6 +21,10 @@ export const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [tabList, setTabList] = useState(tabs);
   const [draggedTab, setDraggedTab] = useState<number | null>(null);
+  const [dropIndicator, setDropIndicator] = useState<{
+    tabId: number;
+    position: 'left' | 'right';
+  } | null>(null);
 
   const handleDragStart = (e: React.DragEvent, tabId: number) => {
     setDraggedTab(tabId);
@@ -31,15 +35,31 @@ export const Tabs = () => {
     e.dataTransfer.setDragImage(dragElement, 0, 0);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent, targetTabId: number) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
+
+    if (draggedTab === null) {
+      setDropIndicator(null);
+      return;
+    }
+
+    // Get the bounding rect of the target tab
+    const targetElement = e.currentTarget as HTMLElement;
+    const rect = targetElement.getBoundingClientRect();
+    const mouseX = e.clientX;
+
+    // Determine if drop is on left or right half
+    const dropZone = mouseX < rect.left + rect.width / 2 ? 'left' : 'right';
+
+    setDropIndicator({ tabId: targetTabId, position: dropZone });
   };
 
   const handleDrop = (e: React.DragEvent, targetTabId: number) => {
     e.preventDefault();
 
     if (draggedTab === null || draggedTab === targetTabId) {
+      setDropIndicator(null);
       return;
     }
 
@@ -73,15 +93,58 @@ export const Tabs = () => {
 
     setTabList(newTabList);
     setDraggedTab(null);
+    setDropIndicator(null);
   };
 
   const handleDragEnd = () => {
     setDraggedTab(null);
+    setDropIndicator(null);
   };
+
+  const handleDragLeave = () => {
+    setDropIndicator(null);
+  };
+
+  const indicatorPosition = useMemo(() => {
+    if (!dropIndicator) return null;
+
+    const targetIndex = tabList.findIndex(
+      tab => tab.id === dropIndicator.tabId
+    );
+    if (targetIndex === -1) return null;
+
+    // Get the actual tab elements to measure their positions
+    const tabElements = document.querySelectorAll('.tabs-header-item');
+    if (targetIndex >= tabElements.length) return null;
+
+    const targetElement = tabElements[targetIndex] as HTMLElement;
+    const targetRect = targetElement.getBoundingClientRect();
+    const tabsGroupRect = document
+      .querySelector('.tabs-group')
+      ?.getBoundingClientRect();
+    if (!tabsGroupRect) return null;
+
+    let leftPosition: number;
+    if (dropIndicator.position === 'left') {
+      leftPosition = targetRect.left - tabsGroupRect.left;
+    } else {
+      leftPosition = targetRect.right - tabsGroupRect.left;
+    }
+
+    return leftPosition;
+  }, [dropIndicator, tabList]);
+
+  const indicatorStyle = {
+    '--drop-indicator-left': `${indicatorPosition}px`,
+  } as React.CSSProperties;
 
   return (
     <div className="tabs">
-      <div className="tabs-group">
+      <div className="tabs-group" style={{ position: 'relative' }}>
+        {dropIndicator && (
+          <div className="tabs-drop-indicator" style={indicatorStyle} />
+        )}
+
         {tabList.map(tab => (
           <div
             key={tab.id}
@@ -91,15 +154,20 @@ export const Tabs = () => {
             onClick={() => setActiveTab(tab.id)}
             draggable
             onDragStart={e => handleDragStart(e, tab.id)}
-            onDragOver={handleDragOver}
+            onDragOver={e => handleDragOver(e, tab.id)}
             onDrop={e => handleDrop(e, tab.id)}
             onDragEnd={handleDragEnd}
+            onDragLeave={handleDragLeave}
           >
             {tab.label}
           </div>
         ))}
       </div>
-      <div className="tabs-content" contentEditable>
+      <div
+        className="tabs-content"
+        contentEditable
+        suppressContentEditableWarning={true}
+      >
         {tabList.find(tab => tab.id === activeTab)?.content}
       </div>
     </div>
