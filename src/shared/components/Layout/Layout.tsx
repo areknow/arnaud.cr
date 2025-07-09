@@ -1,5 +1,5 @@
-import { useState, useRef, useLayoutEffect } from "react";
-import "./layout.scss";
+import { useState, useRef, useLayoutEffect } from 'react';
+import './layout.scss';
 
 export const Layout = ({
   sidebar,
@@ -35,18 +35,18 @@ export const Layout = ({
     };
 
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging]);
 
   const customStyles = {
-    "--sidebar-width": `${sidebarWidth}px`,
+    '--sidebar-width': `${sidebarWidth}px`,
   } as React.CSSProperties;
 
   return (

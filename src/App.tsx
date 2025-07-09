@@ -1,4 +1,4 @@
-import { Layout } from "./shared/components/Layout";
+import { Layout } from './shared/components/Layout';
 
 export const App = () => {
   return (
