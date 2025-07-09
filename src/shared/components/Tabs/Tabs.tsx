@@ -32,9 +32,11 @@ export const Tabs = () => {
    * @param tabId - The id of the tab being dragged
    */
   const handleDragStart = (event: React.DragEvent, tabId: number) => {
+    // Activate the tab being dragged
+    setActiveTab(tabId);
+
     setDraggedTab(tabId);
     event.dataTransfer.effectAllowed = 'move';
-
     // Set the drag image offset to position cursor at top-left corner
     const dragElement = event.currentTarget as HTMLElement;
     event.dataTransfer.setDragImage(dragElement, 0, 0);
