@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+
 import './layout.scss';
 
 export const Layout = ({
