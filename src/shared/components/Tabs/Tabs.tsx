@@ -25,12 +25,6 @@ export const Tabs = () => {
   const handleDragStart = (e: React.DragEvent, tabId: number) => {
     setDraggedTab(tabId);
     e.dataTransfer.effectAllowed = 'move';
-
-    // Create a custom drag image positioned at cursor
-    const dragElement = e.currentTarget as HTMLElement;
-
-    // Set the drag image offset to position it at cursor (top-left)
-    e.dataTransfer.setDragImage(dragElement, 0, 0);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -45,18 +39,33 @@ export const Tabs = () => {
       return;
     }
 
+    // Get the bounding rect of the target tab
+    const targetElement = e.currentTarget as HTMLElement;
+    const rect = targetElement.getBoundingClientRect();
+    const mouseX = e.clientX;
+
+    // Determine if drop is on left or right half
+    const dropZone = mouseX < rect.left + rect.width / 2 ? 'left' : 'right';
+
     const draggedIndex = tabList.findIndex(tab => tab.id === draggedTab);
-    let targetIndex = tabList.findIndex(tab => tab.id === targetTabId);
+    const targetIndex = tabList.findIndex(tab => tab.id === targetTabId);
+
+    // Determine the insertion index based on drop zone
+    let insertionIndex: number;
+    if (dropZone === 'left') {
+      insertionIndex = targetIndex;
+    } else {
+      insertionIndex = targetIndex + 1;
+    }
+
+    // Adjust insertion index if the dragged item was before the insertion point
+    if (draggedIndex < insertionIndex) {
+      insertionIndex -= 1;
+    }
 
     const newTabList = [...tabList];
     const [draggedItem] = newTabList.splice(draggedIndex, 1);
-
-    // Adjust target index if the dragged item was before the target
-    if (draggedIndex < targetIndex) {
-      targetIndex -= 1;
-    }
-
-    newTabList.splice(targetIndex, 0, draggedItem);
+    newTabList.splice(insertionIndex, 0, draggedItem);
 
     setTabList(newTabList);
     setDraggedTab(null);
@@ -70,20 +79,19 @@ export const Tabs = () => {
     <div className="tabs">
       <div className="tabs-group">
         {tabList.map(tab => (
-          <div key={tab.id} style={{ position: 'relative' }}>
-            <div
-              className={classNames('tabs-header-item', {
-                'tabs-header-item--active': activeTab === tab.id,
-              })}
-              onClick={() => setActiveTab(tab.id)}
-              draggable
-              onDragStart={e => handleDragStart(e, tab.id)}
-              onDragOver={handleDragOver}
-              onDrop={e => handleDrop(e, tab.id)}
-              onDragEnd={handleDragEnd}
-            >
-              {tab.label}
-            </div>
+          <div
+            key={tab.id}
+            className={classNames('tabs-header-item', {
+              'tabs-header-item--active': activeTab === tab.id,
+            })}
+            onClick={() => setActiveTab(tab.id)}
+            draggable
+            onDragStart={e => handleDragStart(e, tab.id)}
+            onDragOver={handleDragOver}
+            onDrop={e => handleDrop(e, tab.id)}
+            onDragEnd={handleDragEnd}
+          >
+            {tab.label}
           </div>
         ))}
       </div>
