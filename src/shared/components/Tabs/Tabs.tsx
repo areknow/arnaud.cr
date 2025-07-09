@@ -4,28 +4,33 @@ import classNames from 'classnames';
 
 import './tabs.scss';
 
-interface Tab {
-  id: number;
-  label: string;
-  content: React.ReactNode;
-}
-
-const tabs: Tab[] = [
+const FAKE_TABS: Tab[] = [
   { id: 0, label: 'Tab 1', content: <div>Content 1</div> },
   { id: 1, label: 'Tab 2', content: <div>Content 2</div> },
   { id: 2, label: 'Tab 3', content: <div>Content 3</div> },
   { id: 3, label: 'Tab 4', content: <div>Content 4</div> },
 ];
 
+interface Tab {
+  id: number;
+  label: string;
+  content: React.ReactNode;
+}
+
 export const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [tabList, setTabList] = useState(tabs);
+  const [tabList, setTabList] = useState(FAKE_TABS);
   const [draggedTab, setDraggedTab] = useState<number | null>(null);
   const [dropIndicator, setDropIndicator] = useState<{
     tabId: number;
     position: 'left' | 'right';
   } | null>(null);
 
+  /**
+   * Handles the start of a drag operation.
+   * @param e - The drag event
+   * @param tabId - The id of the tab being dragged
+   */
   const handleDragStart = (e: React.DragEvent, tabId: number) => {
     setDraggedTab(tabId);
     e.dataTransfer.effectAllowed = 'move';
@@ -35,9 +40,14 @@ export const Tabs = () => {
     e.dataTransfer.setDragImage(dragElement, 0, 0);
   };
 
-  const handleDragOver = (e: React.DragEvent, targetTabId: number) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+  /**
+   * Handles the drag over event.
+   * @param event - The drag event
+   * @param targetTabId - The id of the tab being dragged over
+   */
+  const handleDragOver = (event: React.DragEvent, targetTabId: number) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
 
     if (draggedTab === null) {
       setDropIndicator(null);
@@ -45,9 +55,9 @@ export const Tabs = () => {
     }
 
     // Get the bounding rect of the target tab
-    const targetElement = e.currentTarget as HTMLElement;
+    const targetElement = event.currentTarget as HTMLElement;
     const rect = targetElement.getBoundingClientRect();
-    const mouseX = e.clientX;
+    const mouseX = event.clientX;
 
     // Determine if drop is on left or right half
     const dropZone = mouseX < rect.left + rect.width / 2 ? 'left' : 'right';
@@ -55,8 +65,13 @@ export const Tabs = () => {
     setDropIndicator({ tabId: targetTabId, position: dropZone });
   };
 
-  const handleDrop = (e: React.DragEvent, targetTabId: number) => {
-    e.preventDefault();
+  /**
+   * Handles the drop event.
+   * @param event - The drag event
+   * @param targetTabId - The id of the tab being dropped on
+   */
+  const handleDrop = (event: React.DragEvent, targetTabId: number) => {
+    event.preventDefault();
 
     if (draggedTab === null || draggedTab === targetTabId) {
       setDropIndicator(null);
@@ -64,9 +79,9 @@ export const Tabs = () => {
     }
 
     // Get the bounding rect of the target tab
-    const targetElement = e.currentTarget as HTMLElement;
+    const targetElement = event.currentTarget as HTMLElement;
     const rect = targetElement.getBoundingClientRect();
-    const mouseX = e.clientX;
+    const mouseX = event.clientX;
 
     // Determine if drop is on left or right half
     const dropZone = mouseX < rect.left + rect.width / 2 ? 'left' : 'right';
@@ -96,15 +111,22 @@ export const Tabs = () => {
     setDropIndicator(null);
   };
 
+  /**
+   * Handles the end of a drag operation.
+   */
   const handleDragEnd = () => {
     setDraggedTab(null);
     setDropIndicator(null);
   };
 
+  /**
+   * Handles the leave event.
+   */
   const handleDragLeave = () => {
     setDropIndicator(null);
   };
 
+  // Calculates the position of the drop indicator.
   const indicatorPosition = useMemo(() => {
     if (!dropIndicator) return null;
 
@@ -150,12 +172,12 @@ export const Tabs = () => {
               'tab--is-active': activeTab === tab.id,
             })}
             onClick={() => setActiveTab(tab.id)}
-            draggable
             onDragStart={e => handleDragStart(e, tab.id)}
             onDragOver={e => handleDragOver(e, tab.id)}
             onDrop={e => handleDrop(e, tab.id)}
-            onDragEnd={handleDragEnd}
             onDragLeave={handleDragLeave}
+            onDragEnd={handleDragEnd}
+            draggable
           >
             {tab.label}
           </div>
