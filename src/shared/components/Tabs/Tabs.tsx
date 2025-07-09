@@ -114,42 +114,40 @@ export const Tabs = () => {
     if (targetIndex === -1) return null;
 
     // Get the actual tab elements to measure their positions
-    const tabElements = document.querySelectorAll('.tabs-header-item');
+    const tabElements = document.querySelectorAll('.tab');
     if (targetIndex >= tabElements.length) return null;
 
     const targetElement = tabElements[targetIndex] as HTMLElement;
     const targetRect = targetElement.getBoundingClientRect();
-    const tabsGroupRect = document
-      .querySelector('.tabs-group')
-      ?.getBoundingClientRect();
-    if (!tabsGroupRect) return null;
+    const railRect = document.querySelector('.rail')?.getBoundingClientRect();
+    if (!railRect) return null;
 
     let leftPosition: number;
     if (dropIndicator.position === 'left') {
-      leftPosition = targetRect.left - tabsGroupRect.left;
+      leftPosition = targetRect.left - railRect.left;
     } else {
-      leftPosition = targetRect.right - tabsGroupRect.left;
+      leftPosition = targetRect.right - railRect.left;
     }
 
     return leftPosition;
   }, [dropIndicator, tabList]);
 
   const indicatorStyle = {
-    '--drop-indicator-left': `${indicatorPosition}px`,
+    '--_drop-indicator-left': `${indicatorPosition}px`,
   } as React.CSSProperties;
 
   return (
     <div className="tabs">
-      <div className="tabs-group" style={{ position: 'relative' }}>
+      <div className="rail" style={{ position: 'relative' }}>
         {dropIndicator && (
-          <div className="tabs-drop-indicator" style={indicatorStyle} />
+          <div className="drop-indicator" style={indicatorStyle} />
         )}
 
         {tabList.map(tab => (
           <div
             key={tab.id}
-            className={classNames('tabs-header-item', {
-              'tabs-header-item--active': activeTab === tab.id,
+            className={classNames('tab', {
+              'tab--is-active': activeTab === tab.id,
             })}
             onClick={() => setActiveTab(tab.id)}
             draggable
@@ -164,7 +162,7 @@ export const Tabs = () => {
         ))}
       </div>
       <div
-        className="tabs-content"
+        className="content"
         contentEditable
         suppressContentEditableWarning={true}
       >

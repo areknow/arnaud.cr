@@ -2,13 +2,13 @@
   background-color: rgb(7, 4, 29);
   height: 100%;
 
-  .tabs-group {
+  .rail {
     display: flex;
     flex-direction: row;
     cursor: pointer;
     position: relative;
 
-    .tabs-drop-indicator {
+    .drop-indicator {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -16,10 +16,10 @@
       background-color: white;
       z-index: 10;
       pointer-events: none;
-      left: var(--drop-indicator-left, 0);
+      left: var(--_drop-indicator-left, 0);
     }
 
-    .tabs-header-item {
+    .tab {
       background-color: rgb(12, 12, 49);
       padding: 10px;
       border-radius: 5px 5px 0 0;
@@ -33,7 +33,7 @@
         border-right: 1px solid rgb(7, 4, 29);
       }
 
-      &--active {
+      &--is-active {
         background-color: rgb(6, 6, 63);
       }
 
@@ -47,7 +47,7 @@
     }
   }
 
-  .tabs-content {
+  .content {
     background-color: rgb(6, 6, 63);
     height: 100%;
     padding: 20px;
