@@ -180,6 +180,7 @@ export const Tabs = () => {
             draggable
           >
             {tab.label}
+            <button className="close" />
           </div>
         ))}
       </div>
