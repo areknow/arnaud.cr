@@ -19,9 +19,5 @@ export default tseslint.config([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    rules: {
-      // Disable sort-imports as it's too strict and conflicts with Prettier
-      'sort-imports': 'off',
-    },
   },
 ]);
