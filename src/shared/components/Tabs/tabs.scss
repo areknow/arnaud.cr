@@ -23,7 +23,7 @@
       padding: 10px;
       border-radius: 5px 5px 0 0;
       width: 200px;
-      cursor: grab;
+      cursor: pointer;
       user-select: none;
       transition: opacity 0.2s ease;
       position: relative;
@@ -37,7 +37,7 @@
       }
 
       &:active {
-        cursor: grabbing;
+        cursor: pointer;
       }
 
       &[draggable='true']:hover {
