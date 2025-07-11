@@ -11,6 +11,22 @@
     color: white;
     padding: 20px;
     box-sizing: border-box;
+    transition: width 0.2s ease;
+
+    &--dragging {
+      transition: none; // Disable transitions during drag for better performance
+    }
+
+    &--collapsed {
+      padding: 0;
+      overflow: hidden;
+
+      // Hide sidebar content when collapsed
+      > *:not(.sidebar-resizer) {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
 
     .sidebar-resizer {
       position: absolute;
@@ -21,6 +37,7 @@
       background-color: #666;
       cursor: col-resize;
       transition: background-color 0.2s ease;
+      z-index: 10; // Ensure resizer is always on top
 
       &:hover {
         background-color: #999;

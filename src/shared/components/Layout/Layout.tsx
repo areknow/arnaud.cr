@@ -11,6 +11,7 @@ export const Layout = ({
 }) => {
   const [sidebarWidth, setSidebarWidth] = useState(200);
   const [isDragging, setIsDragging] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -24,10 +25,17 @@ export const Layout = ({
 
       const newWidth = e.clientX;
       const minWidth = 100;
+      const collapsedWidth = 4; // Width when collapsed (just enough for resizer)
       const maxWidth = window.innerWidth * 0.8;
+      const edgeThreshold = 10; // How close to the edge to trigger collapse
 
-      if (newWidth >= minWidth && newWidth <= maxWidth) {
+      // Only snap to collapsed state when cursor is very close to the left edge
+      if (newWidth <= edgeThreshold) {
+        setSidebarWidth(collapsedWidth);
+        setIsCollapsed(true);
+      } else if (newWidth >= minWidth && newWidth <= maxWidth) {
         setSidebarWidth(newWidth);
+        setIsCollapsed(false);
       }
     };
 
@@ -52,7 +60,11 @@ export const Layout = ({
 
   return (
     <div className="layout">
-      <div className="sidebar" ref={sidebarRef} style={customStyles}>
+      <div
+        className={`sidebar ${isCollapsed ? 'sidebar--collapsed' : ''} ${isDragging ? 'sidebar--dragging' : ''}`}
+        ref={sidebarRef}
+        style={customStyles}
+      >
         {sidebar}
         <div className="sidebar-resizer" onMouseDown={handleMouseDown} />
       </div>
