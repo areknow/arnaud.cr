@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
 
-import './tabs.scss';
+import styles from './tabs.module.scss';
 
 const FAKE_TABS: Tab[] = [
   { id: 0, label: 'Tab 1', content: <div>Content 1</div> },
@@ -138,12 +138,13 @@ export const Tabs = () => {
     if (targetIndex === -1) return null;
 
     // Get the actual tab elements to measure their positions
-    const tabElements = document.querySelectorAll('.tab');
+    const tabElements = document.querySelectorAll(`.${styles.tab}`);
     if (targetIndex >= tabElements.length) return null;
 
     const targetElement = tabElements[targetIndex] as HTMLElement;
     const targetRect = targetElement.getBoundingClientRect();
-    const railRect = document.querySelector('.rail')?.getBoundingClientRect();
+    const railElement = document.querySelector(`.${styles.rail}`);
+    const railRect = railElement?.getBoundingClientRect();
     if (!railRect) return null;
 
     let leftPosition: number;
@@ -161,33 +162,34 @@ export const Tabs = () => {
   } as React.CSSProperties;
 
   return (
-    <div className="tabs">
-      <div className="rail" style={{ position: 'relative' }}>
+    <div className={styles.tabs}>
+      <div className={styles.rail}>
         {dropIndicator && (
-          <div className="drop-indicator" style={indicatorStyle} />
+          <div className={styles.dropIndicator} style={indicatorStyle} />
         )}
 
         {tabList.map(tab => (
           <div
             key={tab.id}
-            className={classNames('tab', {
-              'tab--is-active': activeTab === tab.id,
+            className={classNames(styles.tab, {
+              [styles.isActive]: activeTab === tab.id,
             })}
-            onClick={() => setActiveTab(tab.id)}
             onDragStart={e => handleDragStart(e, tab.id)}
             onDragOver={e => handleDragOver(e, tab.id)}
+            onClick={() => setActiveTab(tab.id)}
             onDrop={e => handleDrop(e, tab.id)}
             onDragLeave={handleDragLeave}
             onDragEnd={handleDragEnd}
             draggable
           >
             {tab.label}
-            <button className="close" />
+            <button className={styles.close} />
           </div>
         ))}
       </div>
+
       <div
-        className="content"
+        className={styles.content}
         contentEditable
         suppressContentEditableWarning={true}
       >

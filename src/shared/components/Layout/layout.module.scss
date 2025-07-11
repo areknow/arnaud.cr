@@ -5,7 +5,7 @@
   width: 100vw;
 
   .sidebar {
-    width: var(--sidebar-width);
+    width: var(--_sidebar-width);
     background-color: black;
     position: relative;
     color: white;
@@ -13,22 +13,23 @@
     box-sizing: border-box;
     transition: width 100ms ease-in-out;
 
-    &--dragging {
-      transition: none; // Disable transitions during drag for better performance
+    &.isDragging {
+      // Disable transitions during drag for better performance
+      transition: none;
     }
 
-    &--collapsed {
+    &.isCollapsed {
       padding: 0;
       overflow: hidden;
 
       // Hide sidebar content when collapsed
-      > *:not(.sidebar-resizer) {
+      > *:not(.sidebarResizer) {
         opacity: 0;
         pointer-events: none;
       }
     }
 
-    .sidebar-resizer {
+    .sidebarResizer {
       position: absolute;
       top: 0;
       right: 0;
@@ -37,7 +38,8 @@
       background-color: #666;
       cursor: col-resize;
       transition: background-color 0.2s ease;
-      z-index: 10; // Ensure resizer is always on top
+      // Make sure resizer is always on top
+      z-index: 10;
 
       &:hover {
         background-color: #999;
@@ -49,9 +51,8 @@
     }
   }
 
-  .main-content {
+  .mainContent {
     flex: 1;
-    // padding: 20px;
     box-sizing: border-box;
   }
 }

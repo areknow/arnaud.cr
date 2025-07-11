@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-import './layout.scss';
+import classNames from 'classnames';
+
+import styles from './layout.module.scss';
 
 const DEFAULT_SIDEBAR_WIDTH = 400;
 
@@ -16,22 +18,22 @@ export const Layout = ({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleMouseDown = (event: React.MouseEvent) => {
+    event.preventDefault();
     setIsDragging(true);
   };
 
-  const handleDoubleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleDoubleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
     setSidebarWidth(DEFAULT_SIDEBAR_WIDTH); // Reset to default width
     setIsCollapsed(false);
   };
 
   useLayoutEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (event: MouseEvent) => {
       if (!isDragging) return;
 
-      const newWidth = e.clientX;
+      const newWidth = event.clientX;
       const minWidth = 100;
       const collapsedWidth = 4; // Width when collapsed (just enough for resizer)
       const maxWidth = window.innerWidth * 0.8;
@@ -63,24 +65,27 @@ export const Layout = ({
   }, [isDragging]);
 
   const customStyles = {
-    '--sidebar-width': `${sidebarWidth}px`,
+    '--_sidebar-width': `${sidebarWidth}px`,
   } as React.CSSProperties;
 
   return (
-    <div className="layout">
+    <div className={styles.layout}>
       <div
-        className={`sidebar ${isCollapsed ? 'sidebar--collapsed' : ''} ${isDragging ? 'sidebar--dragging' : ''}`}
+        className={classNames(styles.sidebar, {
+          [styles.isCollapsed]: isCollapsed,
+          [styles.isDragging]: isDragging,
+        })}
         ref={sidebarRef}
         style={customStyles}
       >
         {sidebar}
         <div
-          className="sidebar-resizer"
+          className={styles.sidebarResizer}
           onMouseDown={handleMouseDown}
           onDoubleClick={handleDoubleClick}
         />
       </div>
-      <div className="main-content">{content}</div>
+      <div className={styles.mainContent}>{content}</div>
     </div>
   );
 };

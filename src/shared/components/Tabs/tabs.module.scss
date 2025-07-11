@@ -8,7 +8,7 @@
     cursor: pointer;
     position: relative;
 
-    .drop-indicator {
+    .dropIndicator {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -37,7 +37,7 @@
         border-right: 1px solid rgb(7, 4, 29);
       }
 
-      &--is-active {
+      &.isActive {
         background-color: rgb(6, 6, 63);
       }
 
