@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -22,10 +23,12 @@ export default tseslint.config([
       globals: globals.browser,
     },
     plugins: {
+      react,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
     rules: {
+      'react/self-closing-comp': 'error',
       'simple-import-sort/imports': [
         'error',
         {
