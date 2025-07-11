@@ -1,0 +1,13 @@
+.header {
+  // padding: 16px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .action {
+    width: 24px;
+    height: 24px;
+    background-color: blue;
+  }
+}
