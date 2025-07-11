@@ -11,7 +11,7 @@
     color: white;
     padding: 20px;
     box-sizing: border-box;
-    transition: width 0.2s ease;
+    transition: width 100ms ease-in-out;
 
     &--dragging {
       transition: none; // Disable transitions during drag for better performance

@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import './layout.scss';
 
+const DEFAULT_SIDEBAR_WIDTH = 400;
+
 export const Layout = ({
   sidebar,
   content,
@@ -9,7 +11,7 @@ export const Layout = ({
   sidebar: React.ReactNode;
   content: React.ReactNode;
 }) => {
-  const [sidebarWidth, setSidebarWidth] = useState(200);
+  const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
   const [isDragging, setIsDragging] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -17,6 +19,12 @@ export const Layout = ({
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsDragging(true);
+  };
+
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setSidebarWidth(DEFAULT_SIDEBAR_WIDTH); // Reset to default width
+    setIsCollapsed(false);
   };
 
   useLayoutEffect(() => {
@@ -66,7 +74,11 @@ export const Layout = ({
         style={customStyles}
       >
         {sidebar}
-        <div className="sidebar-resizer" onMouseDown={handleMouseDown} />
+        <div
+          className="sidebar-resizer"
+          onMouseDown={handleMouseDown}
+          onDoubleClick={handleDoubleClick}
+        />
       </div>
       <div className="main-content">{content}</div>
     </div>
