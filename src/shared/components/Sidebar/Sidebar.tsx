@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Files, GitPullRequest, type LucideIcon, Search } from 'lucide-react';
 
+import { FileTree } from './FileTree';
 import { Header } from './Header';
 
 import styles from './sidebar.module.scss';
@@ -18,7 +19,7 @@ const SECTIONS: Section[] = [
     icon: Files,
     id: 'explorer',
     label: 'Explorer',
-    content: <div>file tree</div>,
+    content: <FileTree />,
   },
   {
     icon: Search,

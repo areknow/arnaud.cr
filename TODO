@@ -1,2 +1,3 @@
 * persist all positions and settings in local storage
 * version control and file saving
+* lazy load the tab/sidebar content
