@@ -67,6 +67,39 @@ export const Tabs = () => {
   };
 
   /**
+   * Handles the drag over event for the rail (to detect end zone).
+   * @param event - The drag event
+   */
+  const handleRailDragOver = (event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+
+    if (draggedTab === null) {
+      setDropIndicator(null);
+      return;
+    }
+
+    // Get the rail element and its bounding rect
+    const railElement = event.currentTarget as HTMLElement;
+    const mouseX = event.clientX;
+
+    // Check if mouse is in the area to the right of all tabs
+    const tabElements = railElement.querySelectorAll(`.${styles.tab}`);
+    if (tabElements.length === 0) return;
+
+    const lastTabElement = tabElements[tabElements.length - 1] as HTMLElement;
+    const lastTabRect = lastTabElement.getBoundingClientRect();
+
+    // If mouse is to the right of the last tab, show drop indicator on the right side of the last tab
+    if (mouseX > lastTabRect.right) {
+      const lastTab = tabList[tabList.length - 1];
+      if (lastTab) {
+        setDropIndicator({ tabId: lastTab.id, position: 'right' });
+      }
+    }
+  };
+
+  /**
    * Handles the drop event.
    * @param event - The drag event
    * @param targetTabId - The id of the tab being dropped on
@@ -110,6 +143,42 @@ export const Tabs = () => {
     setTabList(newTabList);
     setDraggedTab(null);
     setDropIndicator(null);
+  };
+
+  /**
+   * Handles the drop event for the rail (to handle end zone drops).
+   * @param event - The drag event
+   */
+  const handleRailDrop = (event: React.DragEvent) => {
+    event.preventDefault();
+
+    if (draggedTab === null) {
+      setDropIndicator(null);
+      return;
+    }
+
+    // Get the rail element and check if drop is in the end zone
+    const railElement = event.currentTarget as HTMLElement;
+    const mouseX = event.clientX;
+
+    // Check if mouse is in the area to the right of all tabs
+    const tabElements = railElement.querySelectorAll(`.${styles.tab}`);
+    if (tabElements.length === 0) return;
+
+    const lastTabElement = tabElements[tabElements.length - 1] as HTMLElement;
+    const lastTabRect = lastTabElement.getBoundingClientRect();
+
+    // If mouse is to the right of the last tab, move to end of list
+    if (mouseX > lastTabRect.right) {
+      const draggedIndex = tabList.findIndex(tab => tab.id === draggedTab);
+      const newTabList = [...tabList];
+      const [draggedItem] = newTabList.splice(draggedIndex, 1);
+      newTabList.push(draggedItem);
+
+      setTabList(newTabList);
+      setDraggedTab(null);
+      setDropIndicator(null);
+    }
   };
 
   /**
@@ -162,7 +231,11 @@ export const Tabs = () => {
 
   return (
     <div className={styles.tabs}>
-      <div className={styles.rail}>
+      <div
+        className={styles.rail}
+        onDragOver={handleRailDragOver}
+        onDrop={handleRailDrop}
+      >
         {dropIndicator && (
           <div className={styles.dropIndicator} style={indicatorStyle} />
         )}
