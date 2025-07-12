@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { Node } from './Node';
 import type { NodeShape } from './Node/Node';
+import { Node } from './Node';
 
 import styles from './file-tree.module.scss';
 
