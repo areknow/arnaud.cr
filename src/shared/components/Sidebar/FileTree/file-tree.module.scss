@@ -2,20 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  .file {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .children {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    .child {
-      padding-left: 10px;
-    }
-  }
+  height: 100%;
+  flex-grow: 1;
 }

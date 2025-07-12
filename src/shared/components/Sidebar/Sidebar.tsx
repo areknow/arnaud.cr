@@ -51,7 +51,7 @@ export const Sidebar = () => {
       />
       <div className={styles.content}>
         <div className={styles.title}>{activeSection?.label}</div>
-        {activeSection?.content}
+        <div className={styles.content}>{activeSection?.content}</div>
       </div>
     </div>
   );

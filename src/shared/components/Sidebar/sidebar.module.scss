@@ -1,4 +1,8 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   .title {
     padding: 4px 8px;
     font-size: 10px;
@@ -6,5 +10,12 @@
     color: #fff;
     background-color: #333;
     text-transform: uppercase;
+  }
+
+  .content {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 }

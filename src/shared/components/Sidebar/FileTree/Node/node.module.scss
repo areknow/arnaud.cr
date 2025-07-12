@@ -1,0 +1,56 @@
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    padding-left: calc(var(--_nest-level, 0) * 20px);
+    cursor: default;
+
+    &.clickable {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .icon {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    color: #666;
+    min-width: 12px;
+    display: inline-block;
+
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+
+  .label {
+    flex: 1;
+  }
+
+  .children {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    opacity: 0;
+
+    &.expanded {
+      max-height: 500px;
+      opacity: 1;
+      transition:
+        max-height 0.3s ease-out,
+        opacity 0.2s ease-out 0.1s;
+    }
+  }
+}
