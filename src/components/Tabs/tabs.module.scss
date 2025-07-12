@@ -1,5 +1,5 @@
 .tabs {
-  background-color: rgb(7, 4, 29);
+  background-color: rgb(6, 6, 63);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,7 @@
     flex-direction: row;
     cursor: pointer;
     position: relative;
+    background-color: rgb(7, 7, 28);
 
     .dropIndicator {
       position: absolute;
@@ -84,7 +85,7 @@
 
   .content {
     background-color: rgb(6, 6, 63);
-    flex: 1;
+    flex-grow: 1;
     padding: 20px;
     outline: none;
     overflow-y: auto;

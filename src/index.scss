@@ -17,3 +17,11 @@ html,
 body {
   margin: 0;
 }
+
+.os-scrollbar {
+  --os-size: 15px;
+  --os-handle-bg: rgba(255, 255, 255, 0.2);
+  --os-handle-border-radius: 0;
+  --os-padding-perpendicular: 0;
+  --os-padding-axis: 0;
+}

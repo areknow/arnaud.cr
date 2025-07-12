@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+
+import { SCROLLBAR_OPTIONS } from '../../assets/constants';
 
 import styles from './tabs.module.scss';
 
@@ -260,13 +263,19 @@ export const Tabs = () => {
         ))}
       </div>
 
-      <div
-        className={styles.content}
-        contentEditable
-        suppressContentEditableWarning={true}
+      <OverlayScrollbarsComponent
+        options={SCROLLBAR_OPTIONS}
+        element="div"
+        defer
       >
-        {tabList.find(tab => tab.id === activeTab)?.content}
-      </div>
+        <div
+          className={styles.content}
+          contentEditable
+          suppressContentEditableWarning={true}
+        >
+          {tabList.find(tab => tab.id === activeTab)?.content}
+        </div>
+      </OverlayScrollbarsComponent>
     </div>
   );
 };

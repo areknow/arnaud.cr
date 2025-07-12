@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import { Files, GitPullRequest, type LucideIcon, Search } from 'lucide-react';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+
+import { SCROLLBAR_OPTIONS } from '../../assets/constants';
 
 import { FileTree } from './FileTree';
 import { Header } from './Header';
@@ -51,7 +54,13 @@ export const Sidebar = () => {
       />
       <div className={styles.content}>
         <div className={styles.title}>{activeSection?.label}</div>
-        <div className={styles.content}>{activeSection?.content}</div>
+        <OverlayScrollbarsComponent
+          options={SCROLLBAR_OPTIONS}
+          element="div"
+          defer
+        >
+          <div className={styles.content}>{activeSection?.content}</div>
+        </OverlayScrollbarsComponent>
       </div>
     </div>
   );
