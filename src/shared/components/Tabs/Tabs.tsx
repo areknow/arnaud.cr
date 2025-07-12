@@ -8,7 +8,6 @@ const FAKE_TABS: Tab[] = [
   { id: 0, label: 'Tab 1', content: <div>Content 1</div> },
   { id: 1, label: 'Tab 2', content: <div>Content 2</div> },
   { id: 2, label: 'Tab 3', content: <div>Content 3</div> },
-  { id: 3, label: 'Tab 4', content: <div>Content 4</div> },
 ];
 
 interface Tab {

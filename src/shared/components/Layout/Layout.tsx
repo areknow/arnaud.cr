@@ -4,7 +4,8 @@ import classNames from 'classnames';
 
 import styles from './layout.module.scss';
 
-const DEFAULT_SIDEBAR_WIDTH = 400;
+const DEFAULT_SIDEBAR_WIDTH = 260;
+const MIN_SIDEBAR_WIDTH = 124;
 
 export const Layout = ({
   sidebar,
@@ -34,7 +35,7 @@ export const Layout = ({
       if (!isDragging) return;
 
       const newWidth = event.clientX;
-      const minWidth = 100;
+      const minWidth = MIN_SIDEBAR_WIDTH;
       const collapsedWidth = 4; // Width when collapsed (just enough for resizer)
       const maxWidth = window.innerWidth * 0.8;
       const edgeThreshold = 10; // How close to the edge to trigger collapse
