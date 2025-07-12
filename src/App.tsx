@@ -1,6 +1,6 @@
-import { Layout } from './shared/components/Layout';
-import { Sidebar } from './shared/components/Sidebar';
-import { Tabs } from './shared/components/Tabs';
+import { Layout } from './components/Layout';
+import { Sidebar } from './components/Sidebar';
+import { Tabs } from './components/Tabs';
 
 export const App = () => {
   return (
