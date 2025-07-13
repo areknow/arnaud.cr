@@ -1,45 +1,14 @@
 import { useState } from 'react';
 
+import { SITE_DATA } from '../../../shared/constants/site-data';
+
 import { Node } from './Node';
 import { sortByType } from './sort-by-type';
 import type { NodeShape } from './types';
 
 import styles from './file-tree.module.scss';
 
-const FILES: NodeShape[] = [
-  {
-    name: 'README.md',
-  },
-  {
-    name: 'projects',
-    isExpanded: true,
-    children: [
-      {
-        name: 'arnaud.cr',
-      },
-      {
-        name: 'sway',
-        children: [
-          {
-            name: 'sway-ios.md',
-          },
-          {
-            name: 'sway-marketing-web.md',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: 'contact.ts',
-  },
-  {
-    name: 'blog.css',
-  },
-  {
-    name: 'package.json',
-  },
-];
+const FILES = SITE_DATA.files;
 
 export const FileTree = () => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(() => {

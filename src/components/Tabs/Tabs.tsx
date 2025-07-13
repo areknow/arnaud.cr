@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
-import { SCROLLBAR_OPTIONS } from '../../assets/constants';
+import { SCROLLBAR_OPTIONS } from '../../shared/constants/scroll-bar-options';
 
 import styles from './tabs.module.scss';
 
