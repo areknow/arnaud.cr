@@ -6,9 +6,12 @@ interface TabsContextType {
   tabs: Tab[];
   activeTab: string | null;
   addTab: (tab: Tab) => void;
+  addPreviewTab: (tab: Tab) => void;
   removeTab: (tabId: string) => void;
   setActiveTab: (tabId: string) => void;
+  openTab: (tabId: string) => void;
   isTabOpen: (tabId: string) => boolean;
+  isPreviewTab: (tabId: string) => boolean;
   reorderTabs: (
     draggedTabId: string,
     targetTabId: string,

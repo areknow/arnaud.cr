@@ -18,6 +18,8 @@ export const Tabs = () => {
     removeTab,
     reorderTabs,
     moveTabToEnd,
+    openTab,
+    isPreviewTab,
   } = useTabs();
   const [draggedTab, setDraggedTab] = useState<string | null>(null);
   const [dropIndicator, setDropIndicator] = useState<{
@@ -183,6 +185,16 @@ export const Tabs = () => {
     removeTab(tabId);
   };
 
+  /**
+   * Handles double-click on a tab to fully open it.
+   * @param event - The double-click event
+   * @param tabId - The id of the tab to open
+   */
+  const handleTabDoubleClick = (event: React.MouseEvent, tabId: string) => {
+    event.stopPropagation();
+    openTab(tabId);
+  };
+
   // Calculates the position of the drop indicator.
   const indicatorPosition = useMemo(() => {
     if (!dropIndicator) return null;
@@ -234,10 +246,12 @@ export const Tabs = () => {
             key={tab.id}
             className={classNames(styles.tab, {
               [styles.isActive]: activeTab === tab.id,
+              [styles.isPreview]: isPreviewTab(tab.id),
             })}
             onDragStart={e => handleDragStart(e, tab.id)}
             onDragOver={e => handleDragOver(e, tab.id)}
             onClick={() => setActiveTab(tab.id)}
+            onDoubleClick={e => handleTabDoubleClick(e, tab.id)}
             onDrop={e => handleDrop(e, tab.id)}
             onDragLeave={handleDragLeave}
             onDragEnd={handleDragEnd}

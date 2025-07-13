@@ -56,6 +56,10 @@
         background-color: rgb(6, 6, 63);
       }
 
+      &.isPreview {
+        font-style: italic;
+      }
+
       .close {
         all: unset;
         width: 14px;

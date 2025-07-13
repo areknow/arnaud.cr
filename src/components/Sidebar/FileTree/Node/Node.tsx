@@ -22,21 +22,36 @@ export const Node: React.FC<NodeProps> = ({
   expandedItems,
   onToggleExpanded,
 }) => {
-  const { addTab, isTabOpen } = useTabs();
+  const { addTab, addPreviewTab, openTab, isTabOpen } = useTabs();
   const isExpanded = expandedItems.has(node.name);
   const hasChildren = node.children && node.children.length > 0;
   const hasContent = node.content !== undefined;
 
+  // Single click to open file as preview tab
   const handleClick = () => {
     if (hasChildren) {
       onToggleExpanded(node.name);
     } else if (hasContent) {
-      // Open file in a new tab
-      addTab({
+      addPreviewTab({
         id: node.name,
         label: node.name,
         content: node.content!,
       });
+    }
+  };
+
+  // Double click to open file in a new tab
+  const handleDoubleClick = () => {
+    if (hasContent) {
+      if (isTabOpen(node.name)) {
+        openTab(node.name);
+      } else {
+        addTab({
+          id: node.name,
+          label: node.name,
+          content: node.content!,
+        });
+      }
     }
   };
 
@@ -49,6 +64,7 @@ export const Node: React.FC<NodeProps> = ({
           [styles.isOpen]: isFileOpen,
         })}
         onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
         style={{ '--_nest-level': level } as React.CSSProperties}
       >
         {hasChildren ? (

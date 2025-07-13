@@ -24,9 +24,44 @@ export const TabsProvider: React.FC<TabsProviderProps> = ({ children }) => {
       if (existingTab) {
         return prevTabs;
       }
-      return [...prevTabs, tab];
+      return [...prevTabs, { ...tab, isPreview: false }];
     });
     setActiveTabState(tab.id);
+  };
+
+  /**
+   * Adds a preview tab. If there's already a preview tab, it replaces it.
+   * @param tab - The tab to add as preview.
+   */
+  const addPreviewTab = (tab: Tab) => {
+    setTabs(prevTabs => {
+      // Remove any existing preview tab
+      const tabsWithoutPreview = prevTabs.filter(t => !t.isPreview);
+
+      // Check if this tab already exists as a non-preview tab
+      const existingTab = tabsWithoutPreview.find(t => t.id === tab.id);
+      if (existingTab) {
+        // If it exists, just make it active
+        setActiveTabState(tab.id);
+        return prevTabs;
+      }
+
+      // Add the new preview tab
+      return [...tabsWithoutPreview, { ...tab, isPreview: true }];
+    });
+    setActiveTabState(tab.id);
+  };
+
+  /**
+   * Opens a tab (removes preview status).
+   * @param tabId - The id of the tab to open.
+   */
+  const openTab = (tabId: string) => {
+    setTabs(prevTabs => {
+      return prevTabs.map(tab =>
+        tab.id === tabId ? { ...tab, isPreview: false } : tab
+      );
+    });
   };
 
   /**
@@ -66,6 +101,16 @@ export const TabsProvider: React.FC<TabsProviderProps> = ({ children }) => {
    */
   const isTabOpen = (tabId: string) => {
     return tabs.some(tab => tab.id === tabId);
+  };
+
+  /**
+   * Checks if a tab is in preview mode.
+   * @param tabId - The id of the tab to check.
+   * @returns True if the tab is in preview mode, false otherwise.
+   */
+  const isPreviewTab = (tabId: string) => {
+    const tab = tabs.find(t => t.id === tabId);
+    return tab?.isPreview || false;
   };
 
   /**
@@ -131,9 +176,12 @@ export const TabsProvider: React.FC<TabsProviderProps> = ({ children }) => {
     tabs,
     activeTab,
     addTab,
+    addPreviewTab,
     removeTab,
     setActiveTab,
+    openTab,
     isTabOpen,
+    isPreviewTab,
     reorderTabs,
     moveTabToEnd,
   };
