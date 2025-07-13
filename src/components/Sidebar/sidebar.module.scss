@@ -12,12 +12,4 @@
     background-color: #333;
     text-transform: uppercase;
   }
-
-  // TODO: scroll bar is broken
-  .content {
-    flex-grow: 1;
-    // overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
 }

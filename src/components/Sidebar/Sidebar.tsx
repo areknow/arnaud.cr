@@ -52,16 +52,14 @@ export const Sidebar = () => {
         activeSection={activeSectionId}
         onActionClick={setActiveSectionId}
       />
-      <div className={styles.content}>
-        <div className={styles.title}>{activeSection?.label}</div>
-        <OverlayScrollbarsComponent
-          options={SCROLLBAR_OPTIONS}
-          element="div"
-          defer
-        >
-          <div className={styles.content}>{activeSection?.content}</div>
-        </OverlayScrollbarsComponent>
-      </div>
+      <div className={styles.title}>{activeSection?.label}</div>
+      <OverlayScrollbarsComponent
+        options={SCROLLBAR_OPTIONS}
+        element="div"
+        defer
+      >
+        {activeSection?.content}
+      </OverlayScrollbarsComponent>
     </div>
   );
 };

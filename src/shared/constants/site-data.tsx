@@ -80,7 +80,7 @@ Available on the App Store with 4.8/5 stars and 10k+ downloads.
 Built this app to solve my own habit tracking needs. The development process involved extensive user research and iterative design improvements.`,
             },
             {
-              name: 'sway-marketing-web.md',
+              name: 'swayhammock.app',
               content: `# Sway Marketing Website
 
 A modern marketing website for the Sway habit tracking app, designed to convert visitors into users.
