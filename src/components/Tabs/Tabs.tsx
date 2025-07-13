@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
@@ -26,6 +26,65 @@ export const Tabs = () => {
     tabId: string;
     position: 'left' | 'right';
   } | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Scrolls the rail to make the specified tab visible.
+   * @param tabId - The id of the tab to scroll to
+   */
+  const scrollToTab = useCallback(
+    (tabId: string) => {
+      if (!railRef.current) return;
+
+      const tabIndex = tabs.findIndex(tab => tab.id === tabId);
+      if (tabIndex === -1) return;
+
+      const tabElements = railRef.current.querySelectorAll(`.${styles.tab}`);
+      const tabElement = tabElements[tabIndex] as HTMLElement;
+      if (!tabElement) return;
+
+      const railRect = railRef.current.getBoundingClientRect();
+      const tabRect = tabElement.getBoundingClientRect();
+
+      if (tabRect.left < railRect.left) {
+        railRef.current.scrollTo({
+          left: railRef.current.scrollLeft - (railRect.left - tabRect.left),
+          behavior: 'smooth',
+        });
+      } else if (tabRect.right > railRect.right) {
+        railRef.current.scrollTo({
+          left: railRef.current.scrollLeft + (tabRect.right - railRect.right),
+          behavior: 'smooth',
+        });
+      }
+    },
+    [tabs]
+  );
+
+  // Auto-scroll to active tab when it changes
+  useEffect(() => {
+    if (activeTab) {
+      const timeoutId = setTimeout(() => {
+        scrollToTab(activeTab);
+      }, 50);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [activeTab, scrollToTab]);
+
+  // Auto-scroll to the last tab when new tabs are added
+  useEffect(() => {
+    if (tabs.length > 0) {
+      const lastTab = tabs[tabs.length - 1];
+      if (lastTab && lastTab.id === activeTab) {
+        const timeoutId = setTimeout(() => {
+          scrollToTab(lastTab.id);
+        }, 50);
+
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [tabs.length, activeTab, tabs, scrollToTab]);
 
   /**
    * Handles the start of a drag operation.
@@ -236,6 +295,7 @@ export const Tabs = () => {
         className={styles.rail}
         onDragOver={handleRailDragOver}
         onDrop={handleRailDrop}
+        ref={railRef}
       >
         {dropIndicator && (
           <div className={styles.dropIndicator} style={indicatorStyle} />
