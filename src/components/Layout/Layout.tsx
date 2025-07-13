@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import styles from './layout.module.scss';
 
-const DEFAULT_SIDEBAR_WIDTH = 260;
+const DEFAULT_SIDEBAR_WIDTH = 200;
 const MIN_SIDEBAR_WIDTH = 124;
 
 export const Layout = ({

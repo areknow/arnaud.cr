@@ -1,14 +1,12 @@
 import React from 'react';
 
 import classNames from 'classnames';
+import { Atom } from 'lucide-react';
+
+import { sortByType } from '../sort-by-type';
+import type { NodeShape } from '../types';
 
 import styles from './node.module.scss';
-
-export interface NodeShape {
-  name: string;
-  children?: NodeShape[];
-  isExpanded?: boolean;
-}
 
 interface NodeProps {
   node: NodeShape;
@@ -35,14 +33,16 @@ export const Node: React.FC<NodeProps> = ({
         onClick={() => hasChildren && onToggleExpanded(node.name)}
         style={{ '--_nest-level': level } as React.CSSProperties}
       >
-        {hasChildren && (
+        {hasChildren ? (
           <span
             className={classNames(styles.icon, {
               [styles.expanded]: isExpanded,
             })}
-          >
-            ▶
-          </span>
+          />
+        ) : (
+          <div className={styles.fileIcon}>
+            <Atom />
+          </div>
         )}
         <span className={styles.label}>{node.name}</span>
       </div>
@@ -53,7 +53,7 @@ export const Node: React.FC<NodeProps> = ({
             [styles.expanded]: isExpanded,
           })}
         >
-          {node.children!.map(child => (
+          {node.children!.sort(sortByType).map(child => (
             <Node
               key={child.name}
               node={child}

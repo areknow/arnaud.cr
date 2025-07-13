@@ -1,60 +1,47 @@
 import { useState } from 'react';
 
-import type { NodeShape } from './Node/Node';
 import { Node } from './Node';
+import { sortByType } from './sort-by-type';
+import type { NodeShape } from './types';
 
 import styles from './file-tree.module.scss';
 
 const FILES: NodeShape[] = [
   {
-    name: 'Arnaud Crowther',
+    name: 'README.md',
+  },
+  {
+    name: 'projects',
     isExpanded: true,
     children: [
       {
-        name: 'About',
+        name: 'arnaud.cr',
       },
       {
-        name: 'Porfolio',
+        name: 'sway',
         children: [
           {
-            name: 'Project 1',
+            name: 'sway-ios.md',
           },
           {
-            name: 'Project 2',
-            children: [
-              {
-                name: 'Sub Project A',
-              },
-              {
-                name: 'Sub Project B',
-              },
-            ],
+            name: 'sway-marketing-web.md',
           },
         ],
-      },
-      {
-        name: 'Contact',
       },
     ],
   },
   {
-    name: 'Arnaud Crowther2',
-    children: [
-      {
-        name: 'Aboutx',
-      },
-      {
-        name: 'Porfoliox',
-      },
-      {
-        name: 'Contactx',
-      },
-    ],
+    name: 'contact.ts',
+  },
+  {
+    name: 'blog.css',
+  },
+  {
+    name: 'package.json',
   },
 ];
 
 export const FileTree = () => {
-  // Expand isExpanded items
   const [expandedItems, setExpandedItems] = useState<Set<string>>(() => {
     const initialExpanded = new Set<string>();
 
@@ -85,7 +72,7 @@ export const FileTree = () => {
 
   return (
     <div className={styles.fileTree}>
-      {FILES.map(file => (
+      {FILES.sort(sortByType).map(file => (
         <Node
           key={file.name}
           node={file}
