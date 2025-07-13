@@ -23,9 +23,11 @@ export const Header = ({
             [styles.active]: activeSection === section.id,
           })}
           key={section.id}
-          onClick={() => onActionClick(section.id)}
         >
-          <div className={styles.icon}>
+          <div
+            className={styles.icon}
+            onClick={() => onActionClick(section.id)}
+          >
             <section.icon size={14} />
           </div>
         </div>
