@@ -4,27 +4,24 @@ import classNames from 'classnames';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { SCROLLBAR_OPTIONS } from '../../shared/constants/scroll-bar-options';
+import { useTabs } from '../../shared/hooks/useTabs';
+
+import { EmptyState } from './EmptyState';
 
 import styles from './tabs.module.scss';
 
-const FAKE_TABS: Tab[] = [
-  { id: 0, label: 'Tab 1', content: <div>Content 1</div> },
-  { id: 1, label: 'Tab 2', content: <div>Content 2</div> },
-  { id: 2, label: 'Tab 3', content: <div>Content 3</div> },
-];
-
-interface Tab {
-  id: number;
-  label: string;
-  content: React.ReactNode;
-}
-
 export const Tabs = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [tabList, setTabList] = useState(FAKE_TABS);
-  const [draggedTab, setDraggedTab] = useState<number | null>(null);
+  const {
+    tabs,
+    activeTab,
+    setActiveTab,
+    removeTab,
+    reorderTabs,
+    moveTabToEnd,
+  } = useTabs();
+  const [draggedTab, setDraggedTab] = useState<string | null>(null);
   const [dropIndicator, setDropIndicator] = useState<{
-    tabId: number;
+    tabId: string;
     position: 'left' | 'right';
   } | null>(null);
 
@@ -33,7 +30,7 @@ export const Tabs = () => {
    * @param event - The drag event
    * @param tabId - The id of the tab being dragged
    */
-  const handleDragStart = (event: React.DragEvent, tabId: number) => {
+  const handleDragStart = (event: React.DragEvent, tabId: string) => {
     // Activate the tab being dragged
     setActiveTab(tabId);
 
@@ -49,7 +46,7 @@ export const Tabs = () => {
    * @param event - The drag event
    * @param targetTabId - The id of the tab being dragged over
    */
-  const handleDragOver = (event: React.DragEvent, targetTabId: number) => {
+  const handleDragOver = (event: React.DragEvent, targetTabId: string) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
 
@@ -95,7 +92,7 @@ export const Tabs = () => {
 
     // If mouse is to the right of the last tab, show drop indicator on the right side of the last tab
     if (mouseX > lastTabRect.right) {
-      const lastTab = tabList[tabList.length - 1];
+      const lastTab = tabs[tabs.length - 1];
       if (lastTab) {
         setDropIndicator({ tabId: lastTab.id, position: 'right' });
       }
@@ -107,7 +104,7 @@ export const Tabs = () => {
    * @param event - The drag event
    * @param targetTabId - The id of the tab being dropped on
    */
-  const handleDrop = (event: React.DragEvent, targetTabId: number) => {
+  const handleDrop = (event: React.DragEvent, targetTabId: string) => {
     event.preventDefault();
 
     if (draggedTab === null || draggedTab === targetTabId) {
@@ -123,27 +120,9 @@ export const Tabs = () => {
     // Determine if drop is on left or right half
     const dropZone = mouseX < rect.left + rect.width / 2 ? 'left' : 'right';
 
-    const draggedIndex = tabList.findIndex(tab => tab.id === draggedTab);
-    const targetIndex = tabList.findIndex(tab => tab.id === targetTabId);
+    // Reorder the tabs
+    reorderTabs(draggedTab, targetTabId, dropZone);
 
-    // Determine the insertion index based on drop zone
-    let insertionIndex: number;
-    if (dropZone === 'left') {
-      insertionIndex = targetIndex;
-    } else {
-      insertionIndex = targetIndex + 1;
-    }
-
-    // Adjust insertion index if the dragged item was before the insertion point
-    if (draggedIndex < insertionIndex) {
-      insertionIndex -= 1;
-    }
-
-    const newTabList = [...tabList];
-    const [draggedItem] = newTabList.splice(draggedIndex, 1);
-    newTabList.splice(insertionIndex, 0, draggedItem);
-
-    setTabList(newTabList);
     setDraggedTab(null);
     setDropIndicator(null);
   };
@@ -173,12 +152,7 @@ export const Tabs = () => {
 
     // If mouse is to the right of the last tab, move to end of list
     if (mouseX > lastTabRect.right) {
-      const draggedIndex = tabList.findIndex(tab => tab.id === draggedTab);
-      const newTabList = [...tabList];
-      const [draggedItem] = newTabList.splice(draggedIndex, 1);
-      newTabList.push(draggedItem);
-
-      setTabList(newTabList);
+      moveTabToEnd(draggedTab);
       setDraggedTab(null);
       setDropIndicator(null);
     }
@@ -199,13 +173,21 @@ export const Tabs = () => {
     setDropIndicator(null);
   };
 
+  /**
+   * Handles closing a tab.
+   * @param event - The click event
+   * @param tabId - The id of the tab to close
+   */
+  const handleCloseTab = (event: React.MouseEvent, tabId: string) => {
+    event.stopPropagation();
+    removeTab(tabId);
+  };
+
   // Calculates the position of the drop indicator.
   const indicatorPosition = useMemo(() => {
     if (!dropIndicator) return null;
 
-    const targetIndex = tabList.findIndex(
-      tab => tab.id === dropIndicator.tabId
-    );
+    const targetIndex = tabs.findIndex(tab => tab.id === dropIndicator.tabId);
     if (targetIndex === -1) return null;
 
     // Get the actual tab elements to measure their positions
@@ -226,11 +208,15 @@ export const Tabs = () => {
     }
 
     return leftPosition;
-  }, [dropIndicator, tabList]);
+  }, [dropIndicator, tabs]);
 
   const indicatorStyle = {
     '--_drop-indicator-left': `${indicatorPosition}px`,
   } as React.CSSProperties;
+
+  if (tabs.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <div className={styles.tabs}>
@@ -243,7 +229,7 @@ export const Tabs = () => {
           <div className={styles.dropIndicator} style={indicatorStyle} />
         )}
 
-        {tabList.map(tab => (
+        {tabs.map(tab => (
           <div
             key={tab.id}
             className={classNames(styles.tab, {
@@ -258,7 +244,10 @@ export const Tabs = () => {
             draggable
           >
             {tab.label}
-            <button className={styles.close} />
+            <button
+              className={styles.close}
+              onClick={e => handleCloseTab(e, tab.id)}
+            />
           </div>
         ))}
       </div>
@@ -268,12 +257,12 @@ export const Tabs = () => {
         element="div"
         defer
       >
-        <div
-          className={styles.content}
-          contentEditable
-          suppressContentEditableWarning={true}
-        >
-          {tabList.find(tab => tab.id === activeTab)?.content}
+        <div className={styles.content}>
+          {activeTab && (
+            <pre className={styles.fileContent}>
+              {tabs.find(tab => tab.id === activeTab)?.content}
+            </pre>
+          )}
         </div>
       </OverlayScrollbarsComponent>
     </div>

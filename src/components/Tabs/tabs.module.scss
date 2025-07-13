@@ -10,6 +10,17 @@
     cursor: pointer;
     position: relative;
     background-color: rgb(7, 7, 28);
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-height: 40px;
+    flex-shrink: 0;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .dropIndicator {
       position: absolute;
@@ -26,7 +37,8 @@
       background-color: rgb(12, 12, 49);
       padding: 10px;
       border-radius: 5px 5px 0 0;
-      width: 200px;
+      min-width: 50px;
+      flex-shrink: 0;
       cursor: pointer;
       user-select: none;
       transition: opacity 0.2s ease;
@@ -51,6 +63,7 @@
         cursor: pointer;
         position: relative;
         border-radius: 4px;
+        margin-left: 10px;
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.235);
@@ -89,5 +102,20 @@
     padding: 20px;
     outline: none;
     overflow-y: auto;
+
+    // TODO: remove after building actual pages
+    .fileContent {
+      background-color: rgb(7, 7, 28);
+      border-radius: 8px;
+      padding: 20px;
+      font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgb(220, 220, 220);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-x: auto;
+      border: 1px solid rgb(12, 12, 49);
+    }
   }
 }

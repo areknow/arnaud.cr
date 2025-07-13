@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Atom } from 'lucide-react';
 
+import { useTabs } from '../../../../shared/hooks/useTabs';
 import { sortByType } from '../sort-by-type';
 import type { NodeShape } from '../types';
 
@@ -21,16 +22,33 @@ export const Node: React.FC<NodeProps> = ({
   expandedItems,
   onToggleExpanded,
 }) => {
+  const { addTab, isTabOpen } = useTabs();
   const isExpanded = expandedItems.has(node.name);
   const hasChildren = node.children && node.children.length > 0;
+  const hasContent = node.content !== undefined;
+
+  const handleClick = () => {
+    if (hasChildren) {
+      onToggleExpanded(node.name);
+    } else if (hasContent) {
+      // Open file in a new tab
+      addTab({
+        id: node.name,
+        label: node.name,
+        content: node.content!,
+      });
+    }
+  };
+
+  const isFileOpen = hasContent ? isTabOpen(node.name) : false;
 
   return (
     <div className={styles.node}>
       <div
         className={classNames(styles.header, {
-          [styles.clickable]: hasChildren,
+          [styles.isOpen]: isFileOpen,
         })}
-        onClick={() => hasChildren && onToggleExpanded(node.name)}
+        onClick={handleClick}
         style={{ '--_nest-level': level } as React.CSSProperties}
       >
         {hasChildren ? (

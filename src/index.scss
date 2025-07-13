@@ -17,7 +17,23 @@
 html,
 body {
   margin: 0;
+  // Added to fix content overflow
+  // padding: 0;
+  // overflow: hidden;
+  // height: 100%;
 }
+
+// Added to fix content overflow
+// #root {
+//   height: 100%;
+//   overflow: hidden;
+// }
+
+// Added to fix content overflow
+// .app {
+//   height: 100%;
+//   overflow: hidden;
+// }
 
 .os-scrollbar {
   --os-size: 15px;

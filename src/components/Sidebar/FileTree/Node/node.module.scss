@@ -15,6 +15,11 @@
       background-color: rgba(255, 255, 255, 0.1);
       cursor: pointer;
     }
+
+    // TODO: evaluate if this is needed
+    &.isOpen {
+      background-color: rgba(47, 163, 198, 0.2);
+    }
   }
 
   .icon {
