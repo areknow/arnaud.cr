@@ -81,12 +81,12 @@ export const Layout = ({
       >
         {sidebar}
         <div
-          className={styles.sidebarResizer}
+          className={styles.resizer}
           onMouseDown={handleMouseDown}
           onDoubleClick={handleDoubleClick}
         />
       </div>
-      <div className={styles.mainContent}>{content}</div>
+      <div className={styles.content}>{content}</div>
     </div>
   );
 };

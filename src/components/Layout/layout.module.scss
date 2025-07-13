@@ -22,13 +22,13 @@
       overflow: hidden;
 
       // Hide sidebar content when collapsed
-      > *:not(.sidebarResizer) {
+      > *:not(.resizer) {
         opacity: 0;
         pointer-events: none;
       }
     }
 
-    .sidebarResizer {
+    .resizer {
       position: absolute;
       top: 0;
       right: 0;
@@ -36,21 +36,27 @@
       height: 100%;
       background-color: #666;
       cursor: col-resize;
-      transition: background-color 0.2s ease;
-      // Make sure resizer is always on top
+      transition:
+        background-color 0.2s ease,
+        opacity 0.2s ease;
+      transition-delay: 200ms;
       z-index: 10;
+      opacity: 0;
 
       &:hover {
         background-color: #999;
+        opacity: 1;
+        transition-delay: 0ms;
       }
 
       &:active {
         background-color: #ccc;
+        opacity: 1;
       }
     }
   }
 
-  .mainContent {
+  .content {
     flex: 1;
     box-sizing: border-box;
   }
