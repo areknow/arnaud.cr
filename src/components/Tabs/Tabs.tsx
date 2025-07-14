@@ -317,7 +317,8 @@ export const Tabs = () => {
             onDragEnd={handleDragEnd}
             draggable
           >
-            {tab.label}
+            {tab.icon && <tab.icon className={styles.tabIcon} size={14} />}
+            <span className={styles.tabLabel}>{tab.label}</span>
             <button
               className={styles.close}
               onClick={e => handleCloseTab(e, tab.id)}

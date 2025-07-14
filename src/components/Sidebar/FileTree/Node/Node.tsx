@@ -1,7 +1,6 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { Atom } from 'lucide-react';
 
 import { useTabs } from '../../../../shared/hooks/useTabs';
 import { sortByType } from '../sort-by-type';
@@ -36,6 +35,7 @@ export const Node: React.FC<NodeProps> = ({
         id: node.name,
         label: node.name,
         content: node.content!,
+        icon: node.icon,
       });
     }
   };
@@ -50,6 +50,7 @@ export const Node: React.FC<NodeProps> = ({
           id: node.name,
           label: node.name,
           content: node.content!,
+          icon: node.icon,
         });
       }
     }
@@ -74,9 +75,7 @@ export const Node: React.FC<NodeProps> = ({
             })}
           />
         ) : (
-          <div className={styles.fileIcon}>
-            <Atom />
-          </div>
+          <div className={styles.fileIcon}>{node.icon && <node.icon />}</div>
         )}
         <span className={styles.label}>{node.name}</span>
       </div>

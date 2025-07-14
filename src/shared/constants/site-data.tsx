@@ -1,3 +1,12 @@
+import {
+  Atom,
+  FileCode,
+  FileJson,
+  FileText,
+  FileType,
+  Folder,
+} from 'lucide-react';
+
 import type { NodeShape } from '../../components/Sidebar/FileTree/types';
 import { ARNAUD_CR_CONTENT } from '../content/arnaud.cr';
 import { CONTACT_CONTENT } from '../content/contact';
@@ -13,25 +22,31 @@ export const SITE_DATA = {
     {
       name: 'README.md',
       content: README_CONTENT,
+      icon: FileText,
     },
     {
       name: 'projects',
       isExpanded: true,
+      icon: Folder,
       children: [
         {
           name: 'arnaud.cr',
           content: ARNAUD_CR_CONTENT,
+          icon: Atom,
         },
         {
           name: 'sway',
+          icon: Folder,
           children: [
             {
               name: 'sway-ios.md',
               content: SWAY_IOS_CONTENT,
+              icon: FileText,
             },
             {
               name: 'swayhammock.app',
               content: SWAY_HAMMOCK_CONTENT,
+              icon: Atom,
             },
           ],
         },
@@ -40,14 +55,17 @@ export const SITE_DATA = {
     {
       name: 'contact.ts',
       content: CONTACT_CONTENT,
+      icon: FileCode,
     },
     {
       name: 'blog.css',
       content: BLOG_CSS_CONTENT,
+      icon: FileType,
     },
     {
       name: 'package.json',
       content: PACKAGE_JSON_CONTENT,
+      icon: FileJson,
     },
   ] as NodeShape[],
 };
