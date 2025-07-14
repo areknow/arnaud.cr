@@ -22,7 +22,7 @@ export const Node: React.FC<NodeProps> = ({
   expandedItems,
   onToggleExpanded,
 }) => {
-  const { addTab, addPreviewTab, openTab, isTabOpen } = useTabs();
+  const { addTab, addPreviewTab, openTab, isTabOpen, activeTab } = useTabs();
   const isExpanded = expandedItems.has(node.name);
   const hasChildren = node.children && node.children.length > 0;
   const hasContent = node.content !== undefined;
@@ -55,13 +55,13 @@ export const Node: React.FC<NodeProps> = ({
     }
   };
 
-  const isFileOpen = hasContent ? isTabOpen(node.name) : false;
+  const isFileActive = hasContent ? activeTab === node.name : false;
 
   return (
     <div className={styles.node}>
       <div
         className={classNames(styles.header, {
-          [styles.isOpen]: isFileOpen,
+          [styles.isOpen]: isFileActive,
         })}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
