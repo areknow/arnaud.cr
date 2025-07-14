@@ -25,10 +25,10 @@ export const Header = ({
           key={section.id}
         >
           <div
-            className={styles.icon}
+            className={styles.iconContainer}
             onClick={() => onActionClick(section.id)}
           >
-            <section.icon size={14} />
+            <section.icon className={styles.icon} size={14} />
           </div>
         </div>
       ))}

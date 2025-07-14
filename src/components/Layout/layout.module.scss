@@ -7,7 +7,6 @@
 
   .sidebar {
     width: var(--_sidebar-width);
-    background-color: black;
     position: relative;
     color: white;
     box-sizing: border-box;
@@ -31,7 +30,7 @@
     .resizer {
       position: absolute;
       top: 0;
-      right: 0;
+      right: -2px;
       width: 4px;
       height: 100%;
       cursor: col-resize;
@@ -43,13 +42,13 @@
       opacity: 0;
 
       &:hover {
-        background-color: rgba(11, 124, 168, 0.718); // TODO: colors
+        background-color: #005dc5;
         opacity: 1;
         transition-delay: 300ms;
       }
 
       &:active {
-        background-color: rgba(11, 124, 168, 0.718); // TODO: colors
+        background-color: #005dc5;
         opacity: 1;
       }
     }

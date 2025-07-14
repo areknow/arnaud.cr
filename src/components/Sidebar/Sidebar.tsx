@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-import { Files, GitPullRequest, type LucideIcon, Search } from 'lucide-react';
+import {
+  Ellipsis,
+  Files,
+  GitPullRequest,
+  type LucideIcon,
+  Search,
+} from 'lucide-react';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { SCROLLBAR_OPTIONS } from '../../shared/constants/scroll-bar-options';
@@ -21,7 +27,7 @@ const SECTIONS: Section[] = [
   {
     icon: Files,
     id: 'explorer',
-    label: 'Explorer',
+    label: 'ARNAUD CROWTHER',
     content: <FileTree />,
   },
   {
@@ -52,7 +58,10 @@ export const Sidebar = () => {
         activeSection={activeSectionId}
         onActionClick={setActiveSectionId}
       />
-      <div className={styles.title}>{activeSection?.label}</div>
+      <div className={styles.title}>
+        {activeSection?.label}
+        <Ellipsis className={styles.icon} />
+      </div>
       <OverlayScrollbarsComponent
         options={SCROLLBAR_OPTIONS}
         element="div"
