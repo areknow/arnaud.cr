@@ -121,6 +121,12 @@
         opacity: 1;
       }
     }
+
+    &:after {
+      content: '';
+      flex-grow: 1;
+      border-bottom: 1px solid #1b1f23;
+    }
   }
 
   .content {
