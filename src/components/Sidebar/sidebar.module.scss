@@ -17,9 +17,18 @@
     text-transform: uppercase;
     flex-shrink: 0;
 
+    .label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 10px;
+    }
+
     .icon {
       width: 14px;
       height: 14px;
+      flex-shrink: 0;
     }
   }
 

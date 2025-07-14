@@ -59,7 +59,7 @@ export const Sidebar = () => {
         onActionClick={setActiveSectionId}
       />
       <div className={styles.title}>
-        {activeSection?.label}
+        <span className={styles.label}>{activeSection?.label}</span>
         <Ellipsis className={styles.icon} />
       </div>
       <OverlayScrollbarsComponent
