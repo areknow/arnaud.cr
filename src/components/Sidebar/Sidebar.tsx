@@ -63,6 +63,7 @@ export const Sidebar = () => {
         <Ellipsis className={styles.icon} />
       </div>
       <OverlayScrollbarsComponent
+        className={styles.content}
         options={SCROLLBAR_OPTIONS}
         element="div"
         defer

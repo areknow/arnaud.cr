@@ -15,10 +15,15 @@
     font-weight: 700;
     color: #e2e4e8;
     text-transform: uppercase;
+    flex-shrink: 0;
 
     .icon {
       width: 14px;
       height: 14px;
     }
+  }
+
+  .content {
+    flex-grow: 1;
   }
 }
