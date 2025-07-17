@@ -5,12 +5,12 @@
   justify-content: center;
   height: 100%;
   text-align: center;
-  color: rgb(156, 156, 156);
+  color: var(--text-tertiary-color);
 
   h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: white;
+    color: var(--text-primary-color);
   }
 
   p {

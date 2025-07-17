@@ -1,5 +1,5 @@
 .header {
-  border-bottom: 1px solid #1b1f23;
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,16 +22,16 @@
       cursor: pointer;
 
       .icon {
-        color: #98999b;
+        color: var(--text-tertiary-color);
         width: 16px;
         height: 16px;
       }
     }
 
     &.active .iconContainer {
-      background-color: #272d33;
+      background-color: var(--background-primary-transparent);
       .icon {
-        color: #e7e7e7;
+        color: var(--text-primary-color);
       }
     }
   }

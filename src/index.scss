@@ -1,10 +1,12 @@
+@use './styles/colors.scss' as *;
+@use './styles/scrollbar.scss' as *;
+
 :root {
-  // font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  background-color: #1f2429;
+  background-color: var(--background-primary-color);
   color-scheme: light dark;
 
   // font-synthesis: none;
@@ -19,12 +21,4 @@ body {
   padding: 0;
   overflow: hidden;
   height: 100%;
-}
-
-.os-scrollbar {
-  --os-size: 15px;
-  --os-handle-bg: rgba(255, 255, 255, 0.2);
-  --os-handle-border-radius: 0;
-  --os-padding-perpendicular: 0;
-  --os-padding-axis: 0;
 }
