@@ -13,21 +13,6 @@
     flex-shrink: 0;
     height: 34px;
 
-    .iconContainer {
-      padding: 3px 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      cursor: pointer;
-
-      .icon {
-        color: var(--text-tertiary-color);
-        width: 16px;
-        height: 16px;
-      }
-    }
-
     &.active .iconContainer {
       background-color: var(--background-primary-transparent);
       .icon {

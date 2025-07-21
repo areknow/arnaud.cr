@@ -21,6 +21,7 @@ export type Section = {
   id: string;
   label: string;
   content: React.ReactNode;
+  tooltip: string;
 };
 
 const SECTIONS: Section[] = [
@@ -29,18 +30,21 @@ const SECTIONS: Section[] = [
     id: 'explorer',
     label: 'ARNAUD CROWTHER',
     content: <FileTree />,
+    tooltip: 'Explorer',
   },
   {
     icon: Search,
     id: 'search',
     label: 'Search',
     content: <div>assistant?</div>,
+    tooltip: 'Search',
   },
   {
     icon: GitPullRequest,
     id: 'source-control',
     label: 'Source Control',
     content: <div>fake git</div>,
+    tooltip: 'Source Control',
   },
 ];
 

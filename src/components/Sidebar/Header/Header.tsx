@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-
 import type { Section } from '../Sidebar';
+
+import { TooltipAction } from './TooltipAction';
 
 import styles from './header.module.scss';
 
@@ -18,18 +18,13 @@ export const Header = ({
   return (
     <div className={styles.header}>
       {sections.map(section => (
-        <div
-          className={classNames(styles.action, {
-            [styles.active]: activeSection === section.id,
-          })}
-          key={section.id}
-        >
-          <div
-            className={styles.iconContainer}
+        <div className={styles.action} key={section.id}>
+          <TooltipAction
+            label={section.tooltip}
+            icon={section.icon}
             onClick={() => onActionClick(section.id)}
-          >
-            <section.icon className={styles.icon} size={14} />
-          </div>
+            isActive={activeSection === section.id}
+          />
         </div>
       ))}
     </div>
